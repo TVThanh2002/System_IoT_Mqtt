@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+
+<html lang="en" >
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Temperature & Humidity</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400" rel="stylesheet"/>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/minireset.css/0.0.2/minireset.min.css"/> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="jquery.min.js" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {
+      // Gửi yêu cầu Ajax mỗi 5 giây để lấy dữ liệu cảm biến mới nhất
+      setInterval(function() {
+        $.ajax({
+          // url: "save_sensor_data.php",
+          // type: "POST",
+          // data: {sensor_data: "new_sensor_data"},
+          success: function() {
+            // Cập nhật nội dung trên trang web
+            $("#tempc").load("load_data.php");
+          }
+        });
+      }, 5000);
+    });
+  </script>
+
+  <style>
+
+  body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #fff;
+  }
+
+  .container {
+    min-height: 100vh;
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+  }
+
+  .container header,section,footer {
+    margin: 1em;
+    width: 100%;
+  }
+
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+  }
+
+  header h1 {
+    display: block;
+    margin: 1em;
+    padding: 0.8em;
+    font-size: 1.5em;
+    background-color: #ff7853;
+    color: #fff;
+  }
+
+  section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  section div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5vw;
+    padding: 5px;
+    width: 40vw;
+    min-height: 35vh;
+    text-align: center;
+    font-size: 12vw;
+    font-weight: 300;
+    border-radius: 0.25em;
+    color: #fff;
+    box-shadow: 0 3rem 3rem -1rem rgba(10, 10, 10, 0.23);
+  }
+
+  .temp {
+    background-color: #f11647;
+  }
+
+  .humid {
+    background-color: #1677f1;
+  }
+
+  button {
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0.5em;
+    height: 2em;
+    width: 8em;
+    margin: 0.5em;
+    font-size: 1.5em;
+  }
+
+  #opC {
+    background-color: #7913da;
+    border-color: #7913da;
+    color: #fff;
+  }
+
+  #opF {
+    background-color: #fff;
+    border-color: #7913da;
+    color: #7913da;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  </style>
+
+</head>
+<body>
+
+<div class="container">
+
+  <button type="button" name="manage" id="opC" onclick="location.href='http://localhost/thanh/thanh2.html';">manage</button>
+
+  <!--Display Data-->
+  <section>
+    <div class="temp">
+
+      <span id="tempc">--.-&#176;C</span>
+      <span style="display: none;" id="tempf">--.-&#176;F</span>
+
+    </div>
+    <div class="humid">
+
+      <span  id="humidc">--.-&#37;</span>
+
+    </div>
+  </section>
+
+
+  <footer>
+    <!-- <span> &copy; Samm Du, Matt Borkoski, Kendria Butler, Bernie Suchoza </span>
+    <br>
+    <span><a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a></span> -->
+  </footer>
+
+</div>
+
+<script type="text/javascript">
+
+// Write Celcius Temperature
+function writeEventLog(url, element, unit) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        document.getElementById(element).innerHTML = this.responseText + unit;
+    };
+    xhr.open('GET', url);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.send();
+}
+
+// Pull Data Every 6 Seconds
+// setInterval(function() {
+
+//   writeEventLog('http://localhost/tempc', 'tempc', '&#176;C');
+//   writeEventLog('http://localhost/tempf', 'tempf', '&#176;F');
+//   writeEventLog('http://localhost/humid', 'humid', '&#37;');
+
+// }, 4000);
+
+// function toC() {
+//   var c = document.getElementById("tempc");
+//   var f = document.getElementById("tempf");
+//   var bc = document.getElementById("opC");
+//   var bf = document.getElementById("opF");
+//   if (c.style.display === "none") {
+//     c.style.display = "block";
+//     f.style.display = "none";
+
+//     bc.style.color = "#fff";
+//     bc.style.backgroundColor = "#7913da";
+//     bf.style.color = "#7913da";
+//     bf.style.backgroundColor = "#fff";
+//   }
+// }
+
+
+</script>
+
+</body>
+</html>
